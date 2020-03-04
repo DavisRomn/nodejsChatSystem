@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SENG 513 - Socket.IO chat</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+  </head>
+  <body>
+    <!-- Header -->
+  <div id="header">
+      <div id="home-icon">
+          <h1><a href="index.html">SENG 513 Chat System</a></h1>
+          <span>Davis Roman</span>
+      </div>
+  </div>
+
+  <div id="page-container">
+    <div id="message-container">
+      <ul id="messages"></ul>
+    </div>
+    <div id="online-container">
+      <ul id="online-users"></ul>
+    </div>
+	
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </div>
+	
+	<script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="index.js"></script>
+  </body>
+</html>

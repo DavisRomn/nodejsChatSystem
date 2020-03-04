@@ -1,0 +1,157 @@
+a {
+    color: white;
+    text-decoration: none;
+}
+
+p {
+    font-family: "Major Mono Display", sans-serif;
+    margin: 0px 5px 0px 0px;
+}
+
+body {
+    background-image: url(Badlands.jpg), url(badlands2.jpg);
+	background-position:center top, center bottom;
+	background-repeat: no-repeat, no-repeat;
+    margin: 0px;
+}
+
+* {
+     box-sizing: border-box;
+ }
+
+form {
+    background: #000;
+    margin-left: -5px;
+    bottom: 0px; 
+    position: absolute; 
+    width: 100%; 
+}
+form input { 
+    border: 0;
+    padding: 10px; 
+    width: 88%; 
+    margin-right: .5%; 
+    margin-left: .5%;
+    padding-bottom: 8px;
+    vertical-align: middle;
+}
+form button { 
+    width: 11%;
+    background: rgb(130, 224, 255);
+    color: black;
+    border: none; 
+    padding: 5px;
+    height: 45px;
+    vertical-align: middle;
+    border: black;
+    border-style: solid;
+    border-width: 2px;
+    font-size: x-large;
+}
+
+#messages { 
+    list-style-type: none; margin: 0; padding: 0; 
+    bottom: 0;
+    position: absolute;
+}
+#messages li { 
+    padding: 5px 10px; 
+}
+
+#online-users { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    bottom: 0;
+    position: absolute;
+}
+#online-users li { 
+    padding: 5px 10px; 
+}
+
+#home-icon {
+    font-size: 1em;
+}
+
+#home-icon h1 {
+    display: inline-block;
+    color: white;
+    cursor: default;
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #0F1116;
+    color: #fff !important;
+    padding: 0px 20px 0px 20px;
+    z-index: 100;
+}
+
+.page-header {
+    font-family: "Major Mono Display", sans-serif;
+    letter-spacing: normal;
+    color: #595959;
+    padding-bottom: 5px;
+}
+
+.page-header h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.page-header span {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 20px;
+    color: #666666;
+}
+
+#page-container {
+    position: relative;
+    background: #666666fb;
+    padding: 5px;
+    margin-top: 130px;
+    border-radius: 6px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    min-height: 545px;
+}
+
+#message-container {
+    position: absolute;
+    width: 75%;
+    height: 90%;
+    background-color: #999999fb;
+    overflow-y: auto;
+}
+
+#online-container {
+    position: absolute;
+    width: 23%;
+    height: 90%;
+    background-color: #999999fb;
+    float: right !important;
+    right: 0px;
+    margin-right: 5px;
+    overflow-y: auto;
+}
+
+button {
+    height: 70px;
+    background-color: #595959;
+    border-radius: 3px;
+    border: 1px solid #c4c4c4;
+    font-size: 2rem;
+    color: #cccccc;
+}
+
+button:hover {
+    background-color: #808080;
+}

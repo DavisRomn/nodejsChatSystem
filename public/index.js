@@ -8,7 +8,9 @@ $(document).ready(function(){
         if (message.startsWith("/nickcolor")) {
             socket.emit('nickcolor', message.split(' ')[1]); //Send message to server by sending the message as an event.
         } else if (message.startsWith("/nick")) {
-            socket.emit('nickname', message.split('/nick')[1]);
+            let requestedNick =  message.split('/nick')[1];
+            socket.emit('nickname', requestedNick);
+            document.cookie = "nickname=" + requestedNick + ";";
         } else if (message !== ""){
             socket.emit('chat message', message); //Send message to server by sending the message as an event.
         }
@@ -29,5 +31,9 @@ $(document).ready(function(){
     
     socket.on('online users', function(msg) {
         $('#online-users').append().html(msg);
+    });
+
+    socket.on('username', function(msg) {
+        $("#user-title").get(0).innerHTML = "User: " + msg;
     });
 });

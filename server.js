@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+var cookie = require('cookie');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -18,24 +19,48 @@ app.get('/', function(req, res){
 
 //Scoket connection listener
 io.on('connection', function(socket){
-	
-	let user = {
-		username: "User " + userCount,
-		username_colour: "#ffffff",
+	let user = {};
+	let incomingCookie = {};
+
+	try {
+		incomingCookie = cookie.parse(socket.request.headers.cookie);
+	} catch(e) {
+		console.log(e);
 	}
-	// Increment the userCount
-	userCount++;
+
+	if (incomingCookie.nickname !== undefined) {
+		let checkUsersForName = users.filter(x => x.username === incomingCookie.nickname);
+		if (checkUsersForName.length === 0) {
+			user = {
+				username: incomingCookie.nickname,
+				username_colour: "#ffffff",
+			}
+		} else {
+			user = {
+				username: "User " + userCount,
+				username_colour: "#ffffff",
+			}
+			userCount++;
+		}
+	} else {
+		user = {
+			username: "User " + userCount,
+			username_colour: "#ffffff",
+		}
+		userCount++;
+	}
+
+	// Add the new user to the list of users
+	users.push(user);
 	
 	console.log("Connecting User: " + user.username);
+	socket.emit('username', user.username);
 	
 	// Get all cached messages in a formatted manner
 	let cachedMessages = GetFormattedPastMessages();
 	// Send the cached messages to the new user
 	socket.emit('cached messages', cachedMessages);
 	
-	
-	// Add the new user to the list of users
-	users.push(user);
 	// Get the new formatted list of users
 	let formattedUsers = GetListOfUsers();
 	// Send the new list of formatted users to all users
@@ -47,8 +72,8 @@ io.on('connection', function(socket){
 		// Find the index of the user disconnecting
 		let index = users.map(function(e) { return e.username; }).indexOf(user.username);
 		// Remove them from the list of active users
-		users.splice(index);
-		
+		users.splice(index, 1);
+
 		// Get the list of formatted users
 		let formattedUsers = GetListOfUsers();
 		// Broadcast the updated list of active users to all open connections
@@ -59,8 +84,8 @@ io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
 		let currentDate = new Date();
 		let currentTime = currentDate.getHours() + ":" + (currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes());
-		let message = "<p class='message' style='color: black'><a class='time' style='color: black'>" + currentTime + "</a> <a class='username' style='color: " + user.username_colour + "'>" + user.username + "</a>: " + msg + "</p>";
-		let personalMessage = message.split("style='color: black'").join("style='color: white'");
+		let message = "<p class='message' style='font-weight: normal'><a class='time' style='color: black'>" + currentTime + "</a> <a class='username' style='color: " + user.username_colour + "'>" + user.username + "</a>: " + msg + "</p>";
+		let personalMessage = message.split("style='font-weight: normal'").join("style='font-weight: bold'");
 		
 		AddMessageToCache(message);
 		
@@ -86,8 +111,10 @@ io.on('connection', function(socket){
 			let index = users.map(function(e) { return e.username; }).indexOf(user.username);
 			user.username = msg;
 			users[index].username = msg;
+
 			socket.emit('chat message', "Your nickname has been successfully changed."); 
-			
+			socket.emit('username', user.username);
+
 			let formattedUsers = GetListOfUsers();
 			io.emit('online users', formattedUsers); //Broadcast the message to other socket connections
 		} else {

@@ -10,7 +10,9 @@ $(document).ready(function(){
         } else if (message.startsWith("/nick")) {
             let requestedNick =  message.split('/nick')[1];
             socket.emit('nickname', requestedNick);
-            document.cookie = "nickname=" + requestedNick + ";";
+        } else if (message.startsWith("/")) {
+            $('#messages').append($('<li>').html("Invalid Chat Command, Please Try Again...")); //Append a new message
+            $("#message-container")[0].scrollTop = $("#messages")[0].scrollHeight
         } else if (message !== ""){
             socket.emit('chat message', message); //Send message to server by sending the message as an event.
         }
@@ -35,5 +37,6 @@ $(document).ready(function(){
 
     socket.on('username', function(msg) {
         $("#user-title").get(0).innerHTML = "User: " + msg;
+        document.cookie = "nickname=" + msg + ";";
     });
 });

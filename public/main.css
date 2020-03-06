@@ -124,8 +124,8 @@ form button {
     border-radius: 6px;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
     min-height: 545px;
+    width: 60%;
 }
 
 .title-header {
@@ -176,4 +176,35 @@ button {
 
 button:hover {
     background-color: #808080;
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+    #page-container {
+        width: 75%;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    #page-container {
+        width: 75%;
+    }
+
+    body {
+        background-image: url(assets/badlands2.jpg);
+        background-repeat: repeat;
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+    #page-container {
+        width: 100%;
+    }
+
+    body {
+        background-image: url(assets/badlands2.jpg);
+        background-repeat: repeat;
+    }
 }
